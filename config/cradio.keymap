@@ -11,8 +11,8 @@
 
 #define DEF   0
 #define ADD   0 // additional layout
-#define LEF   1
-#define RIG   2
+#define RIG   1
+#define LEF   2
 #define TRI   3
 
 / {
