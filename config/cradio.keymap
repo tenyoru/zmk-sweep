@@ -6,8 +6,10 @@
 #include <dt-bindings/zmk/bt.h>
 
 // Home row mods macro
-#define HRML(k1,k2,k3) &ht LALT k1  &ht LCTRL k2  &ht LGUI k3
-#define HRMR(k1,k2,k3) &ht RGUI k1  &ht RCTRL k2  &ht RALT k3
+//#define HRML(k1,k2,k3) &ht LALT k1  &ht LCTRL k2  &ht LGUI k3
+//#define HRMR(k1,k2,k3) &ht RGUI k1  &ht RCTRL k2  &ht RALT k3
+#define HRML(k1,k2,k3,k4) &ht LSHFT k1  &ht LALT k2  &ht LCTRL k3  &ht LGUI k4
+#define HRMR(k1,k2,k3,k4) &ht RGUI k1  &ht RCTRL k2  &ht RALT k3  &ht RSHFT k4
 
 #define DEF   0
 #define ADD   0 // additional layout
@@ -45,12 +47,12 @@
             &kp Q      &kp G      &kp M      &kp L      &kp W          &kp Y      &kp F      &kp U      &kp B      &kp FSLH
         //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
         //│  D       │  S       │  T       │  N       │  R       │   │  I       │  A       │  E       │  O       │  H       │
-            &kp D      HRML(S,         T,         N)     &kp R         &kp I      HRMR(A,    E,         O)         &kp H
+            &kp D      HRML(S,         T,         N,     R)            HRMR(I,     A,         E,         O)         &kp H
         //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
-        //│  Z       │  X       │  C       │  V       │  J       │   │  K       │  P       │ , <      │ . >      │   BSPC   │
-            &kp Z      &kp X      &kp C      &kp V      &kp J          &kp K      &kp P      &kp COMMA  &kp DOT    &kp BSPC
+        //│  Z       │  X       │  C       │  V       │  J       │   │  K       │  P       │ , <      │ . >      │ ' "      │
+            &kp Z      &kp X      &kp C      &kp V      &kp J          &kp K      &kp P      &kp COMMA  &kp DOT    &kp SQT
         //╰──────────┴──────────┴──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┴──────────┴──────────╯
-                                           &lt LEF TAB  &kp LSHIFT     &kp SPACE &lt RIG ENTER
+                                           &lt LEF TAB  &kp BSPC       &kp SPACE &lt RIG ENTER
         //                                 ╰──────────┴──────────╯   ╰──────────┴──────────╯
             >;
         };
