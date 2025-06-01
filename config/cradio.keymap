@@ -131,7 +131,7 @@
         //│  Shift   │  Z       │  X       │  C       │  V       │   │          │          │          │          │          │
             &kp LSHFT &kp LALT   &kp X      &kp C      &kp V          &trans     &trans     &trans     &trans     &trans
         //╰──────────┴──────────┴──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┴──────────┴──────────╯
-                                          &lt RIG ESC &kp SPACE     &kp ENTER    &to DEF
+                                          &lt LEF ESC &kp SPACE     &kp ENTER    &to DEF
                                          //╰──────────┴──────────╯   ╰──────────┴──────────╯
             >;
         };
