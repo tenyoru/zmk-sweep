@@ -127,7 +127,7 @@
             &kp TAB   &kp Q      &kp W      &kp E      &kp ESC         &trans     &kp BTN1   &kp MS_UP  &kp BTN2   &kp BTN2
         //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
         //│  Ctrl    │ A        │  S       │  D       │  R       │   │          │ M Left   │  M Down  │  M Right │          │
-            &kp LCTRL  &kp A,     &kp S,     &kp  D,     &kp R         &trans    &kp MS_LEFT &kp MS_DOWN &kp MS_RIGHT &trans
+            &kp LCTRL  &kp A     &kp S      &kp  D      &kp R         &trans    &kp MS_LEFT &kp MS_DOWN &kp MS_RIGHT &trans
         //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
         //│  Shift   │  Z       │  X       │  C       │  V       │   │          │          │          │          │          │
             &kp LSHFT &ht LALT Z  &kp X      &kp C      &kp V          &trans     &trans     &trans     &trans     &trans
