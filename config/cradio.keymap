@@ -27,6 +27,7 @@
 #define RIG   1
 #define LEF   2
 #define TRI   3
+#define GAME  4
 
 / {
     behaviors {
@@ -105,8 +106,8 @@
         tri_layer {
             bindings = <
         //╭──────────┬──────────┬──────────┬───────────┬────────────╮   ╭────────────┬────────────┬──────────┬───────────┬──────────╮
-        //│  F1      │  F2      │  F3      │  F4       │ PROFILE 0  │   │ PROFILE 2  │    PIP     │ADDITIONAL│ VOL MUTE  │ NEXTSONG │
-            &kp F1     &kp F2     &kp F3     &kp F4     &bt BT_SEL 0     &bt BT_SEL 2  &kp C_PIP    &tog ADD   &kp C_MUTE  &kp C_NEXT
+        //│  F1      │  F2      │  F3      │  F4       │ PROFILE 0  │   │ PROFILE 2  │    PIP     │ GAME     │ VOL MUTE  │ NEXTSONG │
+            &kp F1     &kp F2     &kp F3     &kp F4     &bt BT_SEL 0     &bt BT_SEL 2  &kp C_PIP    &tog GAME   &kp C_MUTE  &kp C_NEXT
         //├──────────┼──────────┼──────────┼───────────┼────────────┤   ├────────────┼────────────┼──────────┼───────────┼──────────┤
         //│  F5      │  F6      │  F7      │  F8       │ PROFILE 1  │   │ PROFILE 3  │ INC BRIGHT │  RECORD  │  VOL UP   │PAUSEMUSIC│
             &kp F5     &kp F6     &kp F7     &kp F8     &bt BT_SEL 1     &bt BT_SEL 3  &kp C_BRI_UP  &kp C_REC  &kp C_VOL_UP &kp C_PP
@@ -119,21 +120,21 @@
             >;
         };
 
-        //game_layer {
-        //    bindings = <
+        game_layer {
+            bindings = <
         //╭──────────┬──────────┬──────────┬──────────┬──────────╮   ╭──────────┬──────────┬──────────┬──────────┬──────────╮
-        //│  TAB     │  Q       │  W       │  E       │  R       │   │          │  LClick  │  M Up    │  RClick  │  RClick  │
-        //    &kp TAB   &kp Q      &kp W      &kp E      &kp R          &trans     &kp BTN1   &kp MS_UP  &kp BTN2   &kp BTN2
+        //│   TAB    │  Q       │  W       │  E       │  ESC     │   │          │  LClick  │  M Up    │  RClick  │  RClick  │
+            &kp TAB   &kp Q      &kp W      &kp E      &kp ESC         &trans     &kp BTN1   &kp MS_UP  &kp BTN2   &kp BTN2
         //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
-        //│  Ctrl    │ A        │  S       │  D       │  F       │   │          │ M Left   │  M Down  │  M Right │          │
-        //    &kp LCTRL  &kp A,     &kp S,     &kp  D,     &kp F         &trans     &kp MS_LEFT &kp MS_DOWN &kp MS_RIGHT &trans
+        //│  Ctrl    │ A        │  S       │  D       │  R       │   │          │ M Left   │  M Down  │  M Right │          │
+            &kp LCTRL  &kp A,     &kp S,     &kp  D,     &kp R         &trans    &kp MS_LEFT &kp MS_DOWN &kp MS_RIGHT &trans
         //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
         //│  Shift   │  Z       │  X       │  C       │  V       │   │          │          │          │          │          │
-        //    &kp LSHFT &ht LALT Z  &kp X      &kp C      &kp V          &trans     &trans     &trans     &trans     &trans
+            &kp LSHFT &ht LALT Z  &kp X      &kp C      &kp V          &trans     &trans     &trans     &trans     &trans
         //╰──────────┴──────────┴──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┴──────────┴──────────╯
-        //                                    &lt 2 TAB   &kp SPACE     &kp ENTER  &kp BSPC
-        //                                 ╰──────────┴──────────╯   ╰──────────┴──────────╯
-        //    >;
-        //};
+                                          &lt RIG ENTER &kp SPACE     &kp ENTER  &tog GAME
+                                         //╰──────────┴──────────╯   ╰──────────┴──────────╯
+            >;
+        };
     };
 };
