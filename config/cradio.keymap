@@ -27,6 +27,7 @@
 #define LEF   2
 #define TRI   3
 #define GAME  4
+#define GAME5  5
 
 / {
     behaviors {
@@ -122,16 +123,33 @@
         game_layer {
             bindings = <
         //╭──────────┬──────────┬──────────┬──────────┬──────────╮   ╭──────────┬──────────┬──────────┬──────────┬──────────╮
-        //│   TAB    │  Q       │  W       │  E       │  ESC     │   │          │  LClick  │  M Up    │  RClick  │  RClick  │
-            &kp TAB   &kp Q      &kp W      &kp E      &kp R         &trans     &trans   &trans  &trans   &trans
+        //│   TAB    │  Q       │  W       │  E       │  R       │   │          │          │          │          │          │
+            &kp TAB   &kp Q      &kp W      &kp E      &kp R           &kp T       &kp Y      &kp U      &kp I      &kp O
         //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
-        //│  Ctrl    │ A        │  S       │  D       │  R       │   │          │ M Left   │  M Down  │  M Right │          │
-            &kp LCTRL  &kp A     &kp S      &kp  D      &kp F         &trans    &trans &trans &trans &trans
+        //│  Ctrl    │ A        │  S       │  D       │  R       │   │          │          │          │          │          │
+            &kp LCTRL  &kp A     &kp S      &kp  D      &kp F          &kp G       &kp H      &kp J      &kp K      &kp P
         //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
-        //│  Shift   │  Z       │  X       │  C       │  V       │   │          │          │          │          │          │
-            &kp LSHFT &kp LALT   &kp X      &kp C      &kp V          &trans     &trans     &trans     &trans     &trans
+        //│  Shift   │   ALT    │  Z       │  X       │  C       │   │          │          │          │          │          │
+            &kp LSHFT  &kp LALT   &kp Z      &kp X      &kp C          &kp V      &kp B       &kp N      &kp M      &kp L
         //╰──────────┴──────────┴──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┴──────────┴──────────╯
-                                          &lt LEF ESC &kp SPACE     &kp ENTER    &to DEF
+                                             &mo RIG    &kp SPACE     &kp ENTER   &tog DEF
+                                         //╰──────────┴──────────╯   ╰──────────┴──────────╯
+            >;
+        };
+
+        second_game_layer {
+            bindings = <
+        //╭──────────┬──────────┬──────────┬──────────┬──────────╮   ╭──────────┬──────────┬──────────┬──────────┬──────────╮
+        //│   6      │  7       │  8       │  9       │  0       │   │          │          │          │          │          │
+            &kp N6     &kp N7     &kp N8     &kp N9      &kp N0         &trans     &trans    &trans     &trans     &trans
+        //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
+        //│  1       │ 2        │  3       │  4       │  5       │   │          │          │          │          │          │
+            &kp N1    &kp N2     &kp N3     &kp N4     &kp N5           &trans     &trans    &trans     &trans     &trans
+        //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
+        //│  _       │   -      │    *     │    +     │   =      │   │          │          │          │          │          │
+            &kp UNDER &kp MINUS   &kp ASTRK  &kp PLUS  &kp EQUAL        &trans     &trans    &trans     &trans     &trans
+        //╰──────────┴──────────┴──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┴──────────┴──────────╯
+                                              &trans     &trans         &trans     &trans
                                          //╰──────────┴──────────╯   ╰──────────┴──────────╯
             >;
         };
