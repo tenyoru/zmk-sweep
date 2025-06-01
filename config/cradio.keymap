@@ -23,7 +23,6 @@
 #define HRMR(k1,k2,k3,k4) &ht RGUI k1  &ht RCTRL k2  &ht RSHFT k3  &ht RALT k4
 
 #define DEF   0
-#define ADD   0 // additional layout
 #define RIG   1
 #define LEF   2
 #define TRI   3
@@ -124,15 +123,15 @@
             bindings = <
         //╭──────────┬──────────┬──────────┬──────────┬──────────╮   ╭──────────┬──────────┬──────────┬──────────┬──────────╮
         //│   TAB    │  Q       │  W       │  E       │  ESC     │   │          │  LClick  │  M Up    │  RClick  │  RClick  │
-            &kp TAB   &kp Q      &kp W      &kp E      &kp R         &trans     &kp BTN1   &kp MS_UP  &kp BTN2   &kp BTN2
+            &kp TAB   &kp Q      &kp W      &kp E      &kp R         &trans     &trans   &trans  &trans   &trans
         //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
         //│  Ctrl    │ A        │  S       │  D       │  R       │   │          │ M Left   │  M Down  │  M Right │          │
-            &kp LCTRL  &kp A     &kp S      &kp  D      &kp F         &trans    &kp MS_LEFT &kp MS_DOWN &kp MS_RIGHT &trans
+            &kp LCTRL  &kp A     &kp S      &kp  D      &kp F         &trans    &trans &trans &trans &trans
         //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
         //│  Shift   │  Z       │  X       │  C       │  V       │   │          │          │          │          │          │
             &kp LSHFT &kp LALT   &kp X      &kp C      &kp V          &trans     &trans     &trans     &trans     &trans
         //╰──────────┴──────────┴──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┴──────────┴──────────╯
-                                          &lt RIG ESC &kp SPACE     &kp ENTER  &tog GAME
+                                          &lt RIG ESC &kp SPACE     &kp ENTER    &to DEF
                                          //╰──────────┴──────────╯   ╰──────────┴──────────╯
             >;
         };
