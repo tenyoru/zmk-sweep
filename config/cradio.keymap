@@ -18,6 +18,7 @@
 #include <behaviors.dtsi>
 #include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/bt.h>
+#include <dt-bindings/zmk/modifiers.h>
 
 #define HRML(k1,k2,k3,k4) &ht LALT k1  &ht LSHFT k2  &ht LCTRL k3  &ht LGUI k4
 #define HRMR(k1,k2,k3,k4) &ht RGUI k1  &ht RCTRL k2  &ht RSHFT k3  &ht RALT k4
@@ -28,6 +29,8 @@
 #define TRI   3
 #define GAME  4
 #define GAME2  5
+#define FR    6
+#define RU    7
 
 / {
     behaviors {
@@ -40,6 +43,39 @@
             require-prior-idle-ms = <100>;
             bindings = <&kp>, <&kp>;
         };
+
+        // Cyrillic has 33 letters but the layer only has 30 physical keys.
+        // ё and ъ are dropped (casual Russian typing already substitutes е / omits ъ);
+        // х and э piggyback on к and е via shift, since their own rows were full.
+        morph_k_kh: morph_k_kh {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&uc_ru_k>, <&uc_ru_kh>;
+            mods = <(MOD_LSFT|MOD_RSFT)>;
+        };
+
+        morph_e_eob: morph_e_eob {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&uc_ru_e>, <&uc_ru_eob>;
+            mods = <(MOD_LSFT|MOD_RSFT)>;
+        };
+    };
+
+    combos {
+        compatible = "zmk,combos";
+        combo_fr {
+            timeout-ms = <50>;
+            key-positions = <0 1>;
+            bindings = <&tog FR>;
+            layers = <0>;
+        };
+        combo_ru {
+            timeout-ms = <50>;
+            key-positions = <5 6>;
+            bindings = <&tog RU>;
+            layers = <0>;
+        };
     };
 
     conditional_layers {
@@ -48,6 +84,463 @@
             if-layers = <1 2>;
             then-layer = <3>;
         };
+    };
+
+    macros {
+// ==== FRENCH MACROS ====
+        uc_eacute: uc_eacute {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_press &kp LCTRL &kp LSHFT>
+                , <&macro_tap &kp U &kp N0 &kp N0 &kp E &kp N9>
+                , <&macro_release &kp LCTRL &kp LSHFT>
+                , <&macro_tap &kp SPACE>
+                ;
+        }; // é U+00E9
+        uc_egrave: uc_egrave {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_press &kp LCTRL &kp LSHFT>
+                , <&macro_tap &kp U &kp N0 &kp N0 &kp E &kp N8>
+                , <&macro_release &kp LCTRL &kp LSHFT>
+                , <&macro_tap &kp SPACE>
+                ;
+        }; // è U+00E8
+        uc_ecirc: uc_ecirc {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_press &kp LCTRL &kp LSHFT>
+                , <&macro_tap &kp U &kp N0 &kp N0 &kp E &kp A>
+                , <&macro_release &kp LCTRL &kp LSHFT>
+                , <&macro_tap &kp SPACE>
+                ;
+        }; // ê U+00EA
+        uc_ediaer: uc_ediaer {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_press &kp LCTRL &kp LSHFT>
+                , <&macro_tap &kp U &kp N0 &kp N0 &kp E &kp B>
+                , <&macro_release &kp LCTRL &kp LSHFT>
+                , <&macro_tap &kp SPACE>
+                ;
+        }; // ë U+00EB
+        uc_agrave: uc_agrave {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_press &kp LCTRL &kp LSHFT>
+                , <&macro_tap &kp U &kp N0 &kp N0 &kp E &kp N0>
+                , <&macro_release &kp LCTRL &kp LSHFT>
+                , <&macro_tap &kp SPACE>
+                ;
+        }; // à U+00E0
+        uc_acirc: uc_acirc {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_press &kp LCTRL &kp LSHFT>
+                , <&macro_tap &kp U &kp N0 &kp N0 &kp E &kp N2>
+                , <&macro_release &kp LCTRL &kp LSHFT>
+                , <&macro_tap &kp SPACE>
+                ;
+        }; // â U+00E2
+        uc_ugrave: uc_ugrave {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_press &kp LCTRL &kp LSHFT>
+                , <&macro_tap &kp U &kp N0 &kp N0 &kp F &kp N9>
+                , <&macro_release &kp LCTRL &kp LSHFT>
+                , <&macro_tap &kp SPACE>
+                ;
+        }; // ù U+00F9
+        uc_ucirc: uc_ucirc {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_press &kp LCTRL &kp LSHFT>
+                , <&macro_tap &kp U &kp N0 &kp N0 &kp F &kp B>
+                , <&macro_release &kp LCTRL &kp LSHFT>
+                , <&macro_tap &kp SPACE>
+                ;
+        }; // û U+00FB
+        uc_ocirc: uc_ocirc {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_press &kp LCTRL &kp LSHFT>
+                , <&macro_tap &kp U &kp N0 &kp N0 &kp F &kp N4>
+                , <&macro_release &kp LCTRL &kp LSHFT>
+                , <&macro_tap &kp SPACE>
+                ;
+        }; // ô U+00F4
+        uc_icirc: uc_icirc {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_press &kp LCTRL &kp LSHFT>
+                , <&macro_tap &kp U &kp N0 &kp N0 &kp E &kp E>
+                , <&macro_release &kp LCTRL &kp LSHFT>
+                , <&macro_tap &kp SPACE>
+                ;
+        }; // î U+00EE
+        uc_itrema: uc_itrema {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_press &kp LCTRL &kp LSHFT>
+                , <&macro_tap &kp U &kp N0 &kp N0 &kp E &kp F>
+                , <&macro_release &kp LCTRL &kp LSHFT>
+                , <&macro_tap &kp SPACE>
+                ;
+        }; // ï U+00EF
+        uc_ccedil: uc_ccedil {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_press &kp LCTRL &kp LSHFT>
+                , <&macro_tap &kp U &kp N0 &kp N0 &kp E &kp N7>
+                , <&macro_release &kp LCTRL &kp LSHFT>
+                , <&macro_tap &kp SPACE>
+                ;
+        }; // ç U+00E7
+        uc_oelig: uc_oelig {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_press &kp LCTRL &kp LSHFT>
+                , <&macro_tap &kp U &kp N0 &kp N1 &kp N5 &kp N3>
+                , <&macro_release &kp LCTRL &kp LSHFT>
+                , <&macro_tap &kp SPACE>
+                ;
+        }; // œ U+0153
+        uc_eacuteup: uc_eacuteup {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_press &kp LCTRL &kp LSHFT>
+                , <&macro_tap &kp U &kp N0 &kp N0 &kp C &kp N9>
+                , <&macro_release &kp LCTRL &kp LSHFT>
+                , <&macro_tap &kp SPACE>
+                ;
+        }; // É U+00C9
+
+// ==== RUSSIAN MACROS ====
+        uc_ru_a: uc_ru_a {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_press &kp LCTRL &kp LSHFT>
+                , <&macro_tap &kp U &kp N0 &kp N4 &kp N3 &kp N0>
+                , <&macro_release &kp LCTRL &kp LSHFT>
+                , <&macro_tap &kp SPACE>
+                ;
+        }; // а U+0430
+        uc_ru_b: uc_ru_b {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_press &kp LCTRL &kp LSHFT>
+                , <&macro_tap &kp U &kp N0 &kp N4 &kp N3 &kp N1>
+                , <&macro_release &kp LCTRL &kp LSHFT>
+                , <&macro_tap &kp SPACE>
+                ;
+        }; // б U+0431
+        uc_ru_v: uc_ru_v {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_press &kp LCTRL &kp LSHFT>
+                , <&macro_tap &kp U &kp N0 &kp N4 &kp N3 &kp N2>
+                , <&macro_release &kp LCTRL &kp LSHFT>
+                , <&macro_tap &kp SPACE>
+                ;
+        }; // в U+0432
+        uc_ru_g: uc_ru_g {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_press &kp LCTRL &kp LSHFT>
+                , <&macro_tap &kp U &kp N0 &kp N4 &kp N3 &kp N3>
+                , <&macro_release &kp LCTRL &kp LSHFT>
+                , <&macro_tap &kp SPACE>
+                ;
+        }; // г U+0433
+        uc_ru_d: uc_ru_d {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_press &kp LCTRL &kp LSHFT>
+                , <&macro_tap &kp U &kp N0 &kp N4 &kp N3 &kp N4>
+                , <&macro_release &kp LCTRL &kp LSHFT>
+                , <&macro_tap &kp SPACE>
+                ;
+        }; // д U+0434
+        uc_ru_e: uc_ru_e {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_press &kp LCTRL &kp LSHFT>
+                , <&macro_tap &kp U &kp N0 &kp N4 &kp N3 &kp N5>
+                , <&macro_release &kp LCTRL &kp LSHFT>
+                , <&macro_tap &kp SPACE>
+                ;
+        }; // е U+0435
+        uc_ru_zh: uc_ru_zh {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_press &kp LCTRL &kp LSHFT>
+                , <&macro_tap &kp U &kp N0 &kp N4 &kp N3 &kp N6>
+                , <&macro_release &kp LCTRL &kp LSHFT>
+                , <&macro_tap &kp SPACE>
+                ;
+        }; // ж U+0436
+        uc_ru_z: uc_ru_z {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_press &kp LCTRL &kp LSHFT>
+                , <&macro_tap &kp U &kp N0 &kp N4 &kp N3 &kp N7>
+                , <&macro_release &kp LCTRL &kp LSHFT>
+                , <&macro_tap &kp SPACE>
+                ;
+        }; // з U+0437
+        uc_ru_i: uc_ru_i {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_press &kp LCTRL &kp LSHFT>
+                , <&macro_tap &kp U &kp N0 &kp N4 &kp N3 &kp N8>
+                , <&macro_release &kp LCTRL &kp LSHFT>
+                , <&macro_tap &kp SPACE>
+                ;
+        }; // и U+0438
+        uc_ru_ikr: uc_ru_ikr {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_press &kp LCTRL &kp LSHFT>
+                , <&macro_tap &kp U &kp N0 &kp N4 &kp N3 &kp N9>
+                , <&macro_release &kp LCTRL &kp LSHFT>
+                , <&macro_tap &kp SPACE>
+                ;
+        }; // й U+0439
+        uc_ru_k: uc_ru_k {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_press &kp LCTRL &kp LSHFT>
+                , <&macro_tap &kp U &kp N0 &kp N4 &kp N3 &kp A>
+                , <&macro_release &kp LCTRL &kp LSHFT>
+                , <&macro_tap &kp SPACE>
+                ;
+        }; // к U+043A
+        uc_ru_l: uc_ru_l {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_press &kp LCTRL &kp LSHFT>
+                , <&macro_tap &kp U &kp N0 &kp N4 &kp N3 &kp B>
+                , <&macro_release &kp LCTRL &kp LSHFT>
+                , <&macro_tap &kp SPACE>
+                ;
+        }; // л U+043B
+        uc_ru_m: uc_ru_m {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_press &kp LCTRL &kp LSHFT>
+                , <&macro_tap &kp U &kp N0 &kp N4 &kp N3 &kp C>
+                , <&macro_release &kp LCTRL &kp LSHFT>
+                , <&macro_tap &kp SPACE>
+                ;
+        }; // м U+043C
+        uc_ru_n: uc_ru_n {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_press &kp LCTRL &kp LSHFT>
+                , <&macro_tap &kp U &kp N0 &kp N4 &kp N3 &kp D>
+                , <&macro_release &kp LCTRL &kp LSHFT>
+                , <&macro_tap &kp SPACE>
+                ;
+        }; // н U+043D
+        uc_ru_o: uc_ru_o {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_press &kp LCTRL &kp LSHFT>
+                , <&macro_tap &kp U &kp N0 &kp N4 &kp N3 &kp E>
+                , <&macro_release &kp LCTRL &kp LSHFT>
+                , <&macro_tap &kp SPACE>
+                ;
+        }; // о U+043E
+        uc_ru_p: uc_ru_p {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_press &kp LCTRL &kp LSHFT>
+                , <&macro_tap &kp U &kp N0 &kp N4 &kp N3 &kp F>
+                , <&macro_release &kp LCTRL &kp LSHFT>
+                , <&macro_tap &kp SPACE>
+                ;
+        }; // п U+043F
+        uc_ru_r: uc_ru_r {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_press &kp LCTRL &kp LSHFT>
+                , <&macro_tap &kp U &kp N0 &kp N4 &kp N4 &kp N0>
+                , <&macro_release &kp LCTRL &kp LSHFT>
+                , <&macro_tap &kp SPACE>
+                ;
+        }; // р U+0440
+        uc_ru_s: uc_ru_s {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_press &kp LCTRL &kp LSHFT>
+                , <&macro_tap &kp U &kp N0 &kp N4 &kp N4 &kp N1>
+                , <&macro_release &kp LCTRL &kp LSHFT>
+                , <&macro_tap &kp SPACE>
+                ;
+        }; // с U+0441
+        uc_ru_t: uc_ru_t {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_press &kp LCTRL &kp LSHFT>
+                , <&macro_tap &kp U &kp N0 &kp N4 &kp N4 &kp N2>
+                , <&macro_release &kp LCTRL &kp LSHFT>
+                , <&macro_tap &kp SPACE>
+                ;
+        }; // т U+0442
+        uc_ru_u: uc_ru_u {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_press &kp LCTRL &kp LSHFT>
+                , <&macro_tap &kp U &kp N0 &kp N4 &kp N4 &kp N3>
+                , <&macro_release &kp LCTRL &kp LSHFT>
+                , <&macro_tap &kp SPACE>
+                ;
+        }; // у U+0443
+        uc_ru_f: uc_ru_f {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_press &kp LCTRL &kp LSHFT>
+                , <&macro_tap &kp U &kp N0 &kp N4 &kp N4 &kp N4>
+                , <&macro_release &kp LCTRL &kp LSHFT>
+                , <&macro_tap &kp SPACE>
+                ;
+        }; // ф U+0444
+        uc_ru_kh: uc_ru_kh {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_press &kp LCTRL &kp LSHFT>
+                , <&macro_tap &kp U &kp N0 &kp N4 &kp N4 &kp N5>
+                , <&macro_release &kp LCTRL &kp LSHFT>
+                , <&macro_tap &kp SPACE>
+                ;
+        }; // х U+0445
+        uc_ru_ts: uc_ru_ts {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_press &kp LCTRL &kp LSHFT>
+                , <&macro_tap &kp U &kp N0 &kp N4 &kp N4 &kp N6>
+                , <&macro_release &kp LCTRL &kp LSHFT>
+                , <&macro_tap &kp SPACE>
+                ;
+        }; // ц U+0446
+        uc_ru_ch: uc_ru_ch {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_press &kp LCTRL &kp LSHFT>
+                , <&macro_tap &kp U &kp N0 &kp N4 &kp N4 &kp N7>
+                , <&macro_release &kp LCTRL &kp LSHFT>
+                , <&macro_tap &kp SPACE>
+                ;
+        }; // ч U+0447
+        uc_ru_sh: uc_ru_sh {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_press &kp LCTRL &kp LSHFT>
+                , <&macro_tap &kp U &kp N0 &kp N4 &kp N4 &kp N8>
+                , <&macro_release &kp LCTRL &kp LSHFT>
+                , <&macro_tap &kp SPACE>
+                ;
+        }; // ш U+0448
+        uc_ru_shch: uc_ru_shch {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_press &kp LCTRL &kp LSHFT>
+                , <&macro_tap &kp U &kp N0 &kp N4 &kp N4 &kp N9>
+                , <&macro_release &kp LCTRL &kp LSHFT>
+                , <&macro_tap &kp SPACE>
+                ;
+        }; // щ U+0449
+        uc_ru_y: uc_ru_y {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_press &kp LCTRL &kp LSHFT>
+                , <&macro_tap &kp U &kp N0 &kp N4 &kp N4 &kp B>
+                , <&macro_release &kp LCTRL &kp LSHFT>
+                , <&macro_tap &kp SPACE>
+                ;
+        }; // ы U+044B
+        uc_ru_myagk: uc_ru_myagk {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_press &kp LCTRL &kp LSHFT>
+                , <&macro_tap &kp U &kp N0 &kp N4 &kp N4 &kp C>
+                , <&macro_release &kp LCTRL &kp LSHFT>
+                , <&macro_tap &kp SPACE>
+                ;
+        }; // ь U+044C
+        uc_ru_eob: uc_ru_eob {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_press &kp LCTRL &kp LSHFT>
+                , <&macro_tap &kp U &kp N0 &kp N4 &kp N4 &kp D>
+                , <&macro_release &kp LCTRL &kp LSHFT>
+                , <&macro_tap &kp SPACE>
+                ;
+        }; // э U+044D
+        uc_ru_yu: uc_ru_yu {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_press &kp LCTRL &kp LSHFT>
+                , <&macro_tap &kp U &kp N0 &kp N4 &kp N4 &kp E>
+                , <&macro_release &kp LCTRL &kp LSHFT>
+                , <&macro_tap &kp SPACE>
+                ;
+        }; // ю U+044E
+        uc_ru_ya: uc_ru_ya {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_press &kp LCTRL &kp LSHFT>
+                , <&macro_tap &kp U &kp N0 &kp N4 &kp N4 &kp F>
+                , <&macro_release &kp LCTRL &kp LSHFT>
+                , <&macro_tap &kp SPACE>
+                ;
+        }; // я U+044F
+
     };
 
     keymap {
@@ -151,6 +644,40 @@
         //╰──────────┴──────────┴──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┴──────────┴──────────╯
                                               &trans     &trans         &trans    &kp ENTER
                                          //╰──────────┴──────────╯   ╰──────────┴──────────╯
+            >;
+        };
+
+        fr_layer {
+            bindings = <
+        //╭──────────┬──────────┬──────────┬──────────┬──────────╮   ╭──────────┬──────────┬──────────┬──────────┬──────────╮
+        //│  é       │  è       │  ê       │  ë       │  à       │   │  â       │  ù       │  û       │  ô       │  î       │
+            &uc_eacute &uc_egrave &uc_ecirc  &uc_ediaer &uc_agrave     &uc_acirc  &uc_ugrave &uc_ucirc  &uc_ocirc  &uc_icirc
+        //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
+        //│  ï       │  ç       │  œ       │  É       │          │   │          │          │          │          │          │
+            &uc_itrema &uc_ccedil &uc_oelig  &uc_eacuteup &trans       &trans     &trans     &trans     &trans     &trans
+        //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
+        //│          │          │          │          │          │   │          │          │          │          │          │
+            &trans     &trans     &trans     &trans     &trans         &trans     &trans     &trans     &trans     &trans
+        //╰──────────┴──────────┴──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┴──────────┴──────────╯
+                                             &trans     &trans         &trans     &trans
+        //                                 ╰──────────┴──────────╯   ╰──────────┴──────────╯
+            >;
+        };
+
+        ru_layer {
+            bindings = <
+        //╭──────────┬──────────┬──────────┬──────────┬──────────╮   ╭──────────┬──────────┬──────────┬──────────┬──────────╮
+        //│  й       │  ц       │  у       │ к / х    │ е / э    │   │  н       │  г       │  ш       │  щ       │  з       │
+            &uc_ru_ikr &uc_ru_ts  &uc_ru_u   &morph_k_kh &morph_e_eob  &uc_ru_n   &uc_ru_g   &uc_ru_sh  &uc_ru_shch &uc_ru_z
+        //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
+        //│  ф       │  ы       │  в       │  а       │  п       │   │  р       │  о       │  л       │  д       │  ж       │
+            &uc_ru_f   &uc_ru_y   &uc_ru_v   &uc_ru_a   &uc_ru_p       &uc_ru_r   &uc_ru_o   &uc_ru_l   &uc_ru_d   &uc_ru_zh
+        //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
+        //│  я       │  ч       │  с       │  м       │  и       │   │  т       │  ь       │  б       │  ю       │  .       │
+            &uc_ru_ya  &uc_ru_ch  &uc_ru_s   &uc_ru_m   &uc_ru_i       &uc_ru_t   &uc_ru_myagk &uc_ru_b &uc_ru_yu  &kp DOT
+        //╰──────────┴──────────┴──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┴──────────┴──────────╯
+                                             &trans     &trans         &trans     &trans
+        //                                 ╰──────────┴──────────╯   ╰──────────┴──────────╯
             >;
         };
     };
