@@ -28,6 +28,8 @@
 
 #define HRML(k1,k2,k3,k4) &ht LALT k1  &ht LSHFT k2  &ht LCTRL k3  &ht LGUI k4
 #define HRMR(k1,k2,k3,k4) &ht RGUI k1  &ht RCTRL k2  &ht RSHFT k3  &ht RALT k4
+#define HRMLU(a,b,c,d) &a LALT 0  &b LSHFT 0  &c LCTRL 0  &d LGUI 0
+#define HRMRU(a,b,c,d) &a RGUI 0  &b RCTRL 0  &c RSHFT 0  &d RALT 0
 
 // Layer order matters: a key resolves on the *highest* active layer. The toggled
 // language layers must sit below the momentary ones, or holding a thumb would
@@ -53,25 +55,67 @@
             require-prior-idle-ms = <100>;
             bindings = <&kp>, <&kp>;
         };
+
+        ltp: layer_tap_pref {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            flavor = "tap-preferred";
+            tapping-term-ms = <200>;
+            quick-tap-ms = <150>;
+            require-prior-idle-ms = <100>;
+            bindings = <&mo>, <&kp>;
+        };
+
+        // &uc takes two params so it cannot be a hold-tap tap. 0-cell macros
+        // plus a dummy second cell is the documented workaround.
+        ru_bi_uc: ru_bi_uc { compatible = "zmk,behavior-macro"; #binding-cells = <0>; bindings = <&uc UC_RU_BI>; };
+        ru_v_uc:  ru_v_uc  { compatible = "zmk,behavior-macro"; #binding-cells = <0>; bindings = <&uc UC_RU_V>; };
+        ru_a_uc:  ru_a_uc  { compatible = "zmk,behavior-macro"; #binding-cells = <0>; bindings = <&uc UC_RU_A>; };
+        ru_p_uc:  ru_p_uc  { compatible = "zmk,behavior-macro"; #binding-cells = <0>; bindings = <&uc UC_RU_P>; };
+        ru_r_uc:  ru_r_uc  { compatible = "zmk,behavior-macro"; #binding-cells = <0>; bindings = <&uc UC_RU_R>; };
+        ru_o_uc:  ru_o_uc  { compatible = "zmk,behavior-macro"; #binding-cells = <0>; bindings = <&uc UC_RU_O>; };
+        ru_l_uc:  ru_l_uc  { compatible = "zmk,behavior-macro"; #binding-cells = <0>; bindings = <&uc UC_RU_L>; };
+        ru_d_uc:  ru_d_uc  { compatible = "zmk,behavior-macro"; #binding-cells = <0>; bindings = <&uc UC_RU_D>; };
+
+        ru_bi: ru_bi { compatible = "zmk,behavior-hold-tap"; #binding-cells = <2>; flavor = "tap-preferred"; tapping-term-ms = <200>; quick-tap-ms = <150>; require-prior-idle-ms = <100>; bindings = <&kp>, <&ru_bi_uc>; };
+        ru_v:  ru_v  { compatible = "zmk,behavior-hold-tap"; #binding-cells = <2>; flavor = "tap-preferred"; tapping-term-ms = <200>; quick-tap-ms = <150>; require-prior-idle-ms = <100>; bindings = <&kp>, <&ru_v_uc>; };
+        ru_a:  ru_a  { compatible = "zmk,behavior-hold-tap"; #binding-cells = <2>; flavor = "tap-preferred"; tapping-term-ms = <200>; quick-tap-ms = <150>; require-prior-idle-ms = <100>; bindings = <&kp>, <&ru_a_uc>; };
+        ru_p:  ru_p  { compatible = "zmk,behavior-hold-tap"; #binding-cells = <2>; flavor = "tap-preferred"; tapping-term-ms = <200>; quick-tap-ms = <150>; require-prior-idle-ms = <100>; bindings = <&kp>, <&ru_p_uc>; };
+        ru_r:  ru_r  { compatible = "zmk,behavior-hold-tap"; #binding-cells = <2>; flavor = "tap-preferred"; tapping-term-ms = <200>; quick-tap-ms = <150>; require-prior-idle-ms = <100>; bindings = <&kp>, <&ru_r_uc>; };
+        ru_o:  ru_o  { compatible = "zmk,behavior-hold-tap"; #binding-cells = <2>; flavor = "tap-preferred"; tapping-term-ms = <200>; quick-tap-ms = <150>; require-prior-idle-ms = <100>; bindings = <&kp>, <&ru_o_uc>; };
+        ru_l:  ru_l  { compatible = "zmk,behavior-hold-tap"; #binding-cells = <2>; flavor = "tap-preferred"; tapping-term-ms = <200>; quick-tap-ms = <150>; require-prior-idle-ms = <100>; bindings = <&kp>, <&ru_l_uc>; };
+        ru_d:  ru_d  { compatible = "zmk,behavior-hold-tap"; #binding-cells = <2>; flavor = "tap-preferred"; tapping-term-ms = <200>; quick-tap-ms = <150>; require-prior-idle-ms = <100>; bindings = <&kp>, <&ru_d_uc>; };
     };
 
     combos {
         compatible = "zmk,combos";
-        // `layers` is matched against the *highest* active layer, so each toggle
-        // combo must also list its own layer or there is no way back out.
-        combo_fr {
-            timeout-ms = <50>;
-            require-prior-idle-ms = <100>;
-            key-positions = <0 1>;
-            bindings = <&tog FR>;
-            layers = <DEF FR>;
-        };
         combo_ru {
             timeout-ms = <50>;
             require-prior-idle-ms = <100>;
-            key-positions = <5 6>;
+            key-positions = <0 1>;
             bindings = <&tog RU>;
             layers = <DEF RU>;
+        };
+        combo_yo {
+            timeout-ms = <50>;
+            require-prior-idle-ms = <100>;
+            key-positions = <3 4>;
+            bindings = <&uc UC_RU_YO>;
+            layers = <RU>;
+        };
+        combo_shch {
+            timeout-ms = <50>;
+            require-prior-idle-ms = <100>;
+            key-positions = <7 8>;
+            bindings = <&uc UC_RU_SHCH>;
+            layers = <RU>;
+        };
+        combo_hard {
+            timeout-ms = <50>;
+            require-prior-idle-ms = <100>;
+            key-positions = <26 27>;
+            bindings = <&uc UC_RU_HARD>;
+            layers = <RU>;
         };
     };
 
@@ -88,8 +132,8 @@
         default_layer {
             bindings = <
         //╭──────────┬──────────┬──────────┬──────────┬──────────╮   ╭──────────┬──────────┬──────────┬──────────┬──────────╮
-        //│  Q       │  G       │  M       │  L       │  W       │   │  Y       │  F       │  U       │  B       │ ' "      │
-            &kp Q      &kp G      &kp M      &kp L      &kp W          &kp Y      &kp F      &kp U      &kp B      &kp SQT
+        //│  Q       │  G       │  M       │  L       │  W       │   │  Y       │  F       │  U       │  B       │ ' / FR   │
+            &kp Q      &kp G      &kp M      &kp L      &kp W          &kp Y      &kp F      &kp U      &kp B      &ltp FR SQT
         //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
         //│  D       │  S       │  T       │  N       │  R       │   │  I       │  A       │  E       │  O       │  H       │
             &kp D      HRML(S,         T,         N,     R)            HRMR(I,     A,         E,         O)         &kp H
@@ -102,39 +146,38 @@
             >;
         };
 
-        // ЙЦУКЕН on 30 keys. Shift gives the capital, except on three keys where
-        // it yields the rare letter instead: е→ё, ш→щ, ь→ъ.
+        // ЙЦУКЕН. Home-row mods and thumbs match the base layer. ё/щ/ъ are
+        // combos: к+е, ш+з, ь+б.
         ru_layer {
             bindings = <
         //╭──────────┬──────────┬──────────┬──────────┬──────────╮   ╭──────────┬──────────┬──────────┬──────────┬──────────╮
-        //│  й Й     │  ц Ц     │  у У     │  к К     │  е ё     │   │  н Н     │  г Г     │  ш щ     │  з З     │  х Х     │
-            &uc UC_RU_Y    &uc UC_RU_TS   &uc UC_RU_U    &uc UC_RU_K    &uc UC_RU_YEYO     &uc UC_RU_N    &uc UC_RU_G    &uc 0x448 0x449 &uc UC_RU_Z    &uc UC_RU_KH
+        //│  й Й     │  ц Ц     │  у У     │  к К     │  е Е     │   │  н Н     │  г Г     │  ш Ш     │  з З     │  х Х     │
+            &uc UC_RU_Y    &uc UC_RU_TS   &uc UC_RU_U    &uc UC_RU_K    &uc UC_RU_YE       &uc UC_RU_N    &uc UC_RU_G    &uc UC_RU_SH    &uc UC_RU_Z    &uc UC_RU_KH
         //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
         //│  ф Ф     │  ы Ы     │  в В     │  а А     │  п П     │   │  р Р     │  о О     │  л Л     │  д Д     │  ж Ж     │
-            &uc UC_RU_F    &uc UC_RU_BI   &uc UC_RU_V    &uc UC_RU_A    &uc UC_RU_P        &uc UC_RU_R    &uc UC_RU_O    &uc UC_RU_L     &uc UC_RU_D    &uc UC_RU_ZH
+            &uc UC_RU_F    HRMLU(ru_bi,    ru_v,        ru_a,          ru_p)              HRMRU(ru_r,    ru_o,        ru_l,           ru_d)          &uc UC_RU_ZH
         //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
-        //│  я Я     │  ч Ч     │  с С     │  м М     │  и И     │   │  т Т     │  ь ъ     │  б Б     │  ю Ю     │  э Э     │
-            &uc UC_RU_YA   &uc UC_RU_CH   &uc UC_RU_S    &uc UC_RU_M    &uc UC_RU_I        &uc UC_RU_T    &uc UC_RU_TONE &uc UC_RU_B     &uc UC_RU_YU   &uc UC_RU_E
+        //│  я Я     │  ч Ч     │  с С     │  м М     │  и И     │   │  т Т     │  ь Ь     │  б Б     │  ю Ю     │  э Э     │
+            &uc UC_RU_YA   &uc UC_RU_CH   &uc UC_RU_S    &uc UC_RU_M    &uc UC_RU_I        &uc UC_RU_T    &uc UC_RU_SOFT &uc UC_RU_B     &uc UC_RU_YU   &uc UC_RU_E
         //╰──────────┴──────────┴──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┴──────────┴──────────╯
-        //  Every key here is a &uc, so the home-row mods are covered up and the
-        //  left thumb has to carry Shift — without it ё, щ, ъ and the capitals
-        //  are unreachable.
-                                           &ht LSHFT TAB &trans        &trans     &trans
+                                             &trans     &trans         &trans     &trans
         //                                 ╰──────────┴──────────╯   ╰──────────┴──────────╯
             >;
         };
 
+        // Hold ' (quote) to reach this layer. Home-row mods and thumbs fall
+        // through so Shift still makes É/À/….
         fr_layer {
             bindings = <
         //╭──────────┬──────────┬──────────┬──────────┬──────────╮   ╭──────────┬──────────┬──────────┬──────────┬──────────╮
         //│  é É     │  è È     │  ê Ê     │  ë Ë     │  à À     │   │  â Â     │  ù Ù     │  û Û     │  ô Ô     │  î Î     │
             &uc UC_FR_E_ACUTE     &uc UC_FR_E_GRAVE     &uc UC_FR_E_CIRCUMFLEX &uc UC_FR_E_DIAERESIS &uc UC_FR_A_GRAVE     &uc UC_FR_A_CIRCUMFLEX &uc UC_FR_U_GRAVE     &uc UC_FR_U_CIRCUMFLEX &uc UC_FR_O_CIRCUMFLEX &uc UC_FR_I_CIRCUMFLEX
         //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
-        //│  ï Ï     │  ç Ç     │  œ Œ     │  æ Æ     │  ü Ü     │   │  ÿ Ÿ     │          │          │          │          │
-            &uc UC_FR_I_DIAERESIS &uc UC_FR_C_CEDILLA   &uc UC_FR_OE           &uc UC_FR_AE          &uc UC_FR_U_DIAERESIS &uc UC_FR_Y_DIAERESIS  &trans                &trans                 &trans                 &trans
+        //│  ï Ï     │          │          │          │          │   │          │          │          │          │  ÿ Ÿ     │
+            &uc UC_FR_I_DIAERESIS &trans               &trans               &trans               &trans               &trans               &trans               &trans               &trans               &uc UC_FR_Y_DIAERESIS
         //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
-        //│ OS:linux │ OS:mac   │ OS:win   │          │          │   │          │          │          │          │          │
-            &uc UC_SET_LINUX      &uc UC_SET_MACOS      &uc UC_SET_WIN_COMPOSE &trans     &trans         &trans     &trans     &trans     &trans     &trans
+        //│ OS:linux │ OS:mac   │  ç Ç     │ OS:win   │  ü Ü     │   │  æ Æ     │  œ Œ     │          │          │          │
+            &uc UC_SET_LINUX      &uc UC_SET_MACOS      &uc UC_FR_C_CEDILLA    &uc UC_SET_WIN_COMPOSE &uc UC_FR_U_DIAERESIS &uc UC_FR_AE          &uc UC_FR_OE          &trans               &trans               &trans
         //╰──────────┴──────────┴──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┴──────────┴──────────╯
                                              &trans     &trans         &trans     &trans
         //                                 ╰──────────┴──────────╯   ╰──────────┴──────────╯
