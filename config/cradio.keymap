@@ -56,16 +56,6 @@
             bindings = <&kp>, <&kp>;
         };
 
-        ltp: layer_tap_pref {
-            compatible = "zmk,behavior-hold-tap";
-            #binding-cells = <2>;
-            flavor = "tap-preferred";
-            tapping-term-ms = <200>;
-            quick-tap-ms = <150>;
-            require-prior-idle-ms = <100>;
-            bindings = <&mo>, <&kp>;
-        };
-
         // &uc takes two params so it cannot be a hold-tap tap. 0-cell macros
         // plus a dummy second cell is the documented workaround.
         ru_bi_uc: ru_bi_uc { compatible = "zmk,behavior-macro"; #binding-cells = <0>; bindings = <&uc UC_RU_BI>; };
@@ -89,6 +79,13 @@
 
     combos {
         compatible = "zmk,combos";
+        combo_fr {
+            timeout-ms = <50>;
+            require-prior-idle-ms = <100>;
+            key-positions = <24 25>;
+            bindings = <&sl FR>;
+            layers = <DEF>;
+        };
         combo_ru {
             timeout-ms = <50>;
             require-prior-idle-ms = <100>;
@@ -141,7 +138,7 @@
         //│  Z       │  X       │  C       │  V       │  J       │   │  K       │  P       │ , <      │ . >      │ / ?      │
             &kp Z      &kp X      &kp C      &kp V      &kp J          &kp K      &kp P      &kp COMMA  &kp DOT    &kp FSLH
         //╰──────────┴──────────┴──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┴──────────┴──────────╯
-                                           &lt LEF TAB  &ltp FR SPACE   &kp BSPC  &lt RIG ENTER
+                                           &lt LEF TAB  &kp SPACE      &kp BSPC  &lt RIG ENTER
         //                                 ╰──────────┴──────────╯   ╰──────────┴──────────╯
             >;
         };
@@ -165,8 +162,7 @@
             >;
         };
 
-        // Hold Space. Accents sit on their letter; unused keys (including the
-        // ' / H / column) fall through so no finger-column is stolen.
+        // One-shot via J+K combo (sticky). Accents sit on their letter.
         fr_layer {
             bindings = <
         //╭──────────┬──────────┬──────────┬──────────┬──────────╮   ╭──────────┬──────────┬──────────┬──────────┬──────────╮
