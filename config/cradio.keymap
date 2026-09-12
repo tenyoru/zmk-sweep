@@ -29,14 +29,18 @@
 #define HRML(k1,k2,k3,k4) &ht LALT k1  &ht LSHFT k2  &ht LCTRL k3  &ht LGUI k4
 #define HRMR(k1,k2,k3,k4) &ht RGUI k1  &ht RCTRL k2  &ht RSHFT k3  &ht RALT k4
 
+// Layer order matters: a key resolves on the *highest* active layer. The toggled
+// language layers must sit below the momentary ones, or holding a thumb would
+// leave you stuck in Cyrillic with no numbers, symbols or Shift.
+// These indices must match the order of the nodes in the keymap below.
 #define DEF   0
-#define RIG   1
-#define LEF   2
-#define TRI   3
-#define GAME  4
-#define GAME2  5
-#define FR    6
-#define RU    7
+#define RU    1
+#define FR    2
+#define RIG   3
+#define LEF   4
+#define TRI   5
+#define GAME  6
+#define GAME2 7
 
 / {
     behaviors {
@@ -74,8 +78,8 @@
     conditional_layers {
         compatible = "zmk,conditional-layers";
         tri_layer {
-            if-layers = <1 2>;
-            then-layer = <3>;
+            if-layers = <RIG LEF>;
+            then-layer = <TRI>;
         };
     };
 
@@ -94,6 +98,42 @@
             &kp Z      &kp X      &kp C      &kp V      &kp J          &kp K      &kp P      &kp COMMA  &kp DOT    &kp FSLH
         //╰──────────┴──────────┴──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┴──────────┴──────────╯
                                            &lt LEF TAB  &kp SPACE      &kp BSPC  &lt RIG ENTER
+        //                                 ╰──────────┴──────────╯   ╰──────────┴──────────╯
+            >;
+        };
+
+        // ЙЦУКЕН on 30 keys. Shift gives the capital, except on three keys where
+        // it yields the rare letter instead: е→ё, ш→щ, ь→ъ.
+        ru_layer {
+            bindings = <
+        //╭──────────┬──────────┬──────────┬──────────┬──────────╮   ╭──────────┬──────────┬──────────┬──────────┬──────────╮
+        //│  й Й     │  ц Ц     │  у У     │  к К     │  е ё     │   │  н Н     │  г Г     │  ш щ     │  з З     │  х Х     │
+            &uc UC_RU_Y    &uc UC_RU_TS   &uc UC_RU_U    &uc UC_RU_K    &uc UC_RU_YEYO     &uc UC_RU_N    &uc UC_RU_G    &uc 0x448 0x449 &uc UC_RU_Z    &uc UC_RU_KH
+        //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
+        //│  ф Ф     │  ы Ы     │  в В     │  а А     │  п П     │   │  р Р     │  о О     │  л Л     │  д Д     │  ж Ж     │
+            &uc UC_RU_F    &uc UC_RU_BI   &uc UC_RU_V    &uc UC_RU_A    &uc UC_RU_P        &uc UC_RU_R    &uc UC_RU_O    &uc UC_RU_L     &uc UC_RU_D    &uc UC_RU_ZH
+        //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
+        //│  я Я     │  ч Ч     │  с С     │  м М     │  и И     │   │  т Т     │  ь ъ     │  б Б     │  ю Ю     │  э Э     │
+            &uc UC_RU_YA   &uc UC_RU_CH   &uc UC_RU_S    &uc UC_RU_M    &uc UC_RU_I        &uc UC_RU_T    &uc UC_RU_TONE &uc UC_RU_B     &uc UC_RU_YU   &uc UC_RU_E
+        //╰──────────┴──────────┴──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┴──────────┴──────────╯
+                                             &trans     &trans         &trans     &trans
+        //                                 ╰──────────┴──────────╯   ╰──────────┴──────────╯
+            >;
+        };
+
+        fr_layer {
+            bindings = <
+        //╭──────────┬──────────┬──────────┬──────────┬──────────╮   ╭──────────┬──────────┬──────────┬──────────┬──────────╮
+        //│  é É     │  è È     │  ê Ê     │  ë Ë     │  à À     │   │  â Â     │  ù Ù     │  û Û     │  ô Ô     │  î Î     │
+            &uc UC_FR_E_ACUTE     &uc UC_FR_E_GRAVE     &uc UC_FR_E_CIRCUMFLEX &uc UC_FR_E_DIAERESIS &uc UC_FR_A_GRAVE     &uc UC_FR_A_CIRCUMFLEX &uc UC_FR_U_GRAVE     &uc UC_FR_U_CIRCUMFLEX &uc UC_FR_O_CIRCUMFLEX &uc UC_FR_I_CIRCUMFLEX
+        //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
+        //│  ï Ï     │  ç Ç     │  œ Œ     │  æ Æ     │  ü Ü     │   │  ÿ Ÿ     │          │          │          │          │
+            &uc UC_FR_I_DIAERESIS &uc UC_FR_C_CEDILLA   &uc UC_FR_OE           &uc UC_FR_AE          &uc UC_FR_U_DIAERESIS &uc UC_FR_Y_DIAERESIS  &trans                &trans                 &trans                 &trans
+        //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
+        //│ OS:linux │ OS:mac   │ OS:win   │          │          │   │          │          │          │          │          │
+            &uc UC_SET_LINUX      &uc UC_SET_MACOS      &uc UC_SET_WIN_COMPOSE &trans     &trans         &trans     &trans     &trans     &trans     &trans
+        //╰──────────┴──────────┴──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┴──────────┴──────────╯
+                                             &trans     &trans         &trans     &trans
         //                                 ╰──────────┴──────────╯   ╰──────────┴──────────╯
             >;
         };
@@ -180,42 +220,6 @@
         //╰──────────┴──────────┴──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┴──────────┴──────────╯
                                               &trans     &trans         &trans    &kp ENTER
                                          //╰──────────┴──────────╯   ╰──────────┴──────────╯
-            >;
-        };
-
-        fr_layer {
-            bindings = <
-        //╭──────────┬──────────┬──────────┬──────────┬──────────╮   ╭──────────┬──────────┬──────────┬──────────┬──────────╮
-        //│  é É     │  è È     │  ê Ê     │  ë Ë     │  à À     │   │  â Â     │  ù Ù     │  û Û     │  ô Ô     │  î Î     │
-            &uc UC_FR_E_ACUTE     &uc UC_FR_E_GRAVE     &uc UC_FR_E_CIRCUMFLEX &uc UC_FR_E_DIAERESIS &uc UC_FR_A_GRAVE     &uc UC_FR_A_CIRCUMFLEX &uc UC_FR_U_GRAVE     &uc UC_FR_U_CIRCUMFLEX &uc UC_FR_O_CIRCUMFLEX &uc UC_FR_I_CIRCUMFLEX
-        //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
-        //│  ï Ï     │  ç Ç     │  œ Œ     │  æ Æ     │  ü Ü     │   │  ÿ Ÿ     │          │          │          │          │
-            &uc UC_FR_I_DIAERESIS &uc UC_FR_C_CEDILLA   &uc UC_FR_OE           &uc UC_FR_AE          &uc UC_FR_U_DIAERESIS &uc UC_FR_Y_DIAERESIS  &trans                &trans                 &trans                 &trans
-        //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
-        //│ OS:linux │ OS:mac   │ OS:win   │          │          │   │          │          │          │          │          │
-            &uc UC_SET_LINUX      &uc UC_SET_MACOS      &uc UC_SET_WIN_COMPOSE &trans     &trans         &trans     &trans     &trans     &trans     &trans
-        //╰──────────┴──────────┴──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┴──────────┴──────────╯
-                                             &trans     &trans         &trans     &trans
-        //                                 ╰──────────┴──────────╯   ╰──────────┴──────────╯
-            >;
-        };
-
-        // ЙЦУКЕН on 30 keys. Shift gives the capital, except on three keys where
-        // it yields the rare letter instead: е→ё, ш→щ, ь→ъ.
-        ru_layer {
-            bindings = <
-        //╭──────────┬──────────┬──────────┬──────────┬──────────╮   ╭──────────┬──────────┬──────────┬──────────┬──────────╮
-        //│  й Й     │  ц Ц     │  у У     │  к К     │  е ё     │   │  н Н     │  г Г     │  ш щ     │  з З     │  х Х     │
-            &uc UC_RU_Y    &uc UC_RU_TS   &uc UC_RU_U    &uc UC_RU_K    &uc UC_RU_YEYO     &uc UC_RU_N    &uc UC_RU_G    &uc 0x448 0x449 &uc UC_RU_Z    &uc UC_RU_KH
-        //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
-        //│  ф Ф     │  ы Ы     │  в В     │  а А     │  п П     │   │  р Р     │  о О     │  л Л     │  д Д     │  ж Ж     │
-            &uc UC_RU_F    &uc UC_RU_BI   &uc UC_RU_V    &uc UC_RU_A    &uc UC_RU_P        &uc UC_RU_R    &uc UC_RU_O    &uc UC_RU_L     &uc UC_RU_D    &uc UC_RU_ZH
-        //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
-        //│  я Я     │  ч Ч     │  с С     │  м М     │  и И     │   │  т Т     │  ь ъ     │  б Б     │  ю Ю     │  э Э     │
-            &uc UC_RU_YA   &uc UC_RU_CH   &uc UC_RU_S    &uc UC_RU_M    &uc UC_RU_I        &uc UC_RU_T    &uc UC_RU_TONE &uc UC_RU_B     &uc UC_RU_YU   &uc UC_RU_E
-        //╰──────────┴──────────┴──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┴──────────┴──────────╯
-                                             &trans     &trans         &trans     &trans
-        //                                 ╰──────────┴──────────╯   ╰──────────┴──────────╯
             >;
         };
     };
