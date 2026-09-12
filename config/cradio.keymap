@@ -21,7 +21,7 @@
 #include <dt-bindings/zmk/modifiers.h>
 #include <behaviors/unicode.dtsi>
 
-// Unicode input system. Switch on the fly with &uc UC_SET_* (see fr_layer).
+// Unicode input system. Switch on the fly with &uc UC_SET_* (see left_layer).
 &uc {
     default-mode = <UC_MODE_LINUX>;
 };
@@ -165,19 +165,18 @@
             >;
         };
 
-        // Hold ' (quote) to reach this layer. Home-row mods and thumbs fall
-        // through so Shift still makes É/À/….
+        // Hold '. H (under ') and the whole bottom row stay transparent.
         fr_layer {
             bindings = <
         //╭──────────┬──────────┬──────────┬──────────┬──────────╮   ╭──────────┬──────────┬──────────┬──────────┬──────────╮
-        //│  é É     │  è È     │  ê Ê     │  ë Ë     │  à À     │   │  â Â     │  ù Ù     │  û Û     │  ô Ô     │  î Î     │
-            &uc UC_FR_E_ACUTE     &uc UC_FR_E_GRAVE     &uc UC_FR_E_CIRCUMFLEX &uc UC_FR_E_DIAERESIS &uc UC_FR_A_GRAVE     &uc UC_FR_A_CIRCUMFLEX &uc UC_FR_U_GRAVE     &uc UC_FR_U_CIRCUMFLEX &uc UC_FR_O_CIRCUMFLEX &uc UC_FR_I_CIRCUMFLEX
+        //│  é É     │  è È     │  ê Ê     │  ë Ë     │  à À     │   │  â Â     │  ù Ù     │  ô Ô     │  î Î     │          │
+            &uc UC_FR_E_ACUTE     &uc UC_FR_E_GRAVE     &uc UC_FR_E_CIRCUMFLEX &uc UC_FR_E_DIAERESIS &uc UC_FR_A_GRAVE     &uc UC_FR_A_CIRCUMFLEX &uc UC_FR_U_GRAVE     &uc UC_FR_O_CIRCUMFLEX &uc UC_FR_I_CIRCUMFLEX &trans
         //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
-        //│  ï Ï     │          │          │          │          │   │          │          │          │          │  ÿ Ÿ     │
-            &uc UC_FR_I_DIAERESIS &trans               &trans               &trans               &trans               &trans               &trans               &trans               &trans               &uc UC_FR_Y_DIAERESIS
+        //│  ç Ç     │          │          │          │          │   │          │          │          │          │          │
+            &uc UC_FR_C_CEDILLA   &trans               &trans               &trans               &trans               &trans               &trans               &trans               &trans               &trans
         //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
-        //│ OS:linux │ OS:mac   │  ç Ç     │ OS:win   │  ü Ü     │   │  æ Æ     │  œ Œ     │          │          │          │
-            &uc UC_SET_LINUX      &uc UC_SET_MACOS      &uc UC_FR_C_CEDILLA    &uc UC_SET_WIN_COMPOSE &uc UC_FR_U_DIAERESIS &uc UC_FR_AE          &uc UC_FR_OE          &trans               &trans               &trans
+        //│          │          │          │          │          │   │          │          │          │          │          │
+            &trans                &trans               &trans               &trans               &trans               &trans               &trans               &trans               &trans               &trans
         //╰──────────┴──────────┴──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┴──────────┴──────────╯
                                              &trans     &trans         &trans     &trans
         //                                 ╰──────────┴──────────╯   ╰──────────┴──────────╯
@@ -204,14 +203,14 @@
         left_layer {
             bindings = <
         //╭──────────┬──────────┬──────────┬──────────┬──────────╮   ╭──────────┬──────────┬──────────┬──────────┬──────────╮
-        //│  !       │  @       │  #       │  %       │          │   │          │  `       │  ~       │  &       │  ^       │
-            &kp EXCL   &kp AT     &kp HASH   &kp PRCNT &trans         &trans      &kp GRAVE  &kp TILDE  &kp AMPS   &kp CARET
+        //│  !       │  @       │  #       │  %       │ OS:linux │   │          │  `       │  ~       │  &       │  ^       │
+            &kp EXCL   &kp AT     &kp HASH   &kp PRCNT &uc UC_SET_LINUX &trans      &kp GRAVE  &kp TILDE  &kp AMPS   &kp CARET
         //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
-        //│  _       │  $       │  *       │  +       │          │   │          │  -       │  =       │     :    │  ;       │
-           &kp UNDER   &kp DLLR   &kp ASTRK &kp PLUS   &trans         &trans     &kp MINUS  &kp EQUAL  &kp COLON   &kp SEMI
+        //│  _       │  $       │  *       │  +       │ OS:mac   │   │          │  -       │  =       │     :    │  ;       │
+           &kp UNDER   &kp DLLR   &kp ASTRK &kp PLUS   &uc UC_SET_MACOS &trans     &kp MINUS  &kp EQUAL  &kp COLON   &kp SEMI
         //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
-        //│    \     │  [       │  {       │  (       │          │   │          │  )       │  }       │  ]       │  │       │
-           &kp BSLH   &kp LBKT   &kp LBRC   &kp LPAR   &trans         &trans       &kp RPAR   &kp RBRC   &kp RBKT &kp PIPE
+        //│    \     │  [       │  {       │  (       │ OS:win   │   │          │  )       │  }       │  ]       │  │       │
+           &kp BSLH   &kp LBKT   &kp LBRC   &kp LPAR   &uc UC_SET_WIN_COMPOSE &trans &kp RPAR   &kp RBRC   &kp RBKT &kp PIPE
         //╰──────────┴──────────┴──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┴──────────┴──────────╯
                                              &trans     &trans         &trans     &trans
         //                                 ╰──────────┴──────────╯   ╰──────────┴──────────╯
