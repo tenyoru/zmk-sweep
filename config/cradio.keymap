@@ -116,7 +116,10 @@
         //│  я Я     │  ч Ч     │  с С     │  м М     │  и И     │   │  т Т     │  ь ъ     │  б Б     │  ю Ю     │  э Э     │
             &uc UC_RU_YA   &uc UC_RU_CH   &uc UC_RU_S    &uc UC_RU_M    &uc UC_RU_I        &uc UC_RU_T    &uc UC_RU_TONE &uc UC_RU_B     &uc UC_RU_YU   &uc UC_RU_E
         //╰──────────┴──────────┴──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┴──────────┴──────────╯
-                                             &trans     &trans         &trans     &trans
+        //  Every key here is a &uc, so the home-row mods are covered up and the
+        //  left thumb has to carry Shift — without it ё, щ, ъ and the capitals
+        //  are unreachable.
+                                           &ht LSHFT TAB &trans        &trans     &trans
         //                                 ╰──────────┴──────────╯   ╰──────────┴──────────╯
             >;
         };
@@ -144,8 +147,8 @@
         //│ 1        │  2       │  3       │  4       │  5       │   │ 6        │ 7        │ 8        │ 9        │   0      │
             &kp N1    &kp N2     &kp N3     &kp N4     &kp N5          &kp N6     &kp N7     &kp N8     &kp N9      &kp N0
         //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
-        //│          │ PAGE UP  │   UP     │ PAGE DN  │          |   │ DELETE   │ CapsLock │ PrintSc  │   0      │          |
-             &trans   &kp PG_UP   &kp UARW  &kp PG_DN   &trans         &kp DEL   &kp CAPS   &kp PSCRN    &kp N0    &trans
+        //│          │ PAGE UP  │   UP     │ PAGE DN  │          |   │ DELETE   │ CapsLock │ PrintSc  │ . >      │ , <      |
+             &trans   &kp PG_UP   &kp UARW  &kp PG_DN   &trans         &kp DEL   &kp CAPS   &kp PSCRN   &kp DOT   &kp COMMA
         //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
         //│          │  LEFT    │ DOWN     │ RIGHT    │          │   │  HOME    │  END     │  INSERT  │          │          │
             &trans    &kp LARW    &kp DARW   &kp RARW    &trans         &kp HOME   &kp END  &kp INS     &trans      &trans
