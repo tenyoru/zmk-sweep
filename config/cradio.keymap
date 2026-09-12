@@ -132,8 +132,8 @@
         default_layer {
             bindings = <
         //╭──────────┬──────────┬──────────┬──────────┬──────────╮   ╭──────────┬──────────┬──────────┬──────────┬──────────╮
-        //│  Q       │  G       │  M       │  L       │  W       │   │  Y       │  F       │  U       │  B       │ ' / FR   │
-            &kp Q      &kp G      &kp M      &kp L      &kp W          &kp Y      &kp F      &kp U      &kp B      &ltp FR SQT
+        //│  Q       │  G       │  M       │  L       │  W       │   │  Y       │  F       │  U       │  B       │ ' "      │
+            &kp Q      &kp G      &kp M      &kp L      &kp W          &kp Y      &kp F      &kp U      &kp B      &kp SQT
         //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
         //│  D       │  S       │  T       │  N       │  R       │   │  I       │  A       │  E       │  O       │  H       │
             &kp D      HRML(S,         T,         N,     R)            HRMR(I,     A,         E,         O)         &kp H
@@ -141,7 +141,7 @@
         //│  Z       │  X       │  C       │  V       │  J       │   │  K       │  P       │ , <      │ . >      │ / ?      │
             &kp Z      &kp X      &kp C      &kp V      &kp J          &kp K      &kp P      &kp COMMA  &kp DOT    &kp FSLH
         //╰──────────┴──────────┴──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┴──────────┴──────────╯
-                                           &lt LEF TAB  &kp SPACE      &kp BSPC  &lt RIG ENTER
+                                           &lt LEF TAB  &ltp FR SPACE   &kp BSPC  &lt RIG ENTER
         //                                 ╰──────────┴──────────╯   ╰──────────┴──────────╯
             >;
         };
@@ -165,18 +165,19 @@
             >;
         };
 
-        // Hold '. H (under ') and the whole bottom row stay transparent.
+        // Hold Space. Accents sit on their letter; unused keys (including the
+        // ' / H / column) fall through so no finger-column is stolen.
         fr_layer {
             bindings = <
         //╭──────────┬──────────┬──────────┬──────────┬──────────╮   ╭──────────┬──────────┬──────────┬──────────┬──────────╮
-        //│  é É     │  è È     │  ê Ê     │  ë Ë     │  à À     │   │  â Â     │  ù Ù     │  ô Ô     │  î Î     │          │
-            &uc UC_FR_E_ACUTE     &uc UC_FR_E_GRAVE     &uc UC_FR_E_CIRCUMFLEX &uc UC_FR_E_DIAERESIS &uc UC_FR_A_GRAVE     &uc UC_FR_A_CIRCUMFLEX &uc UC_FR_U_GRAVE     &uc UC_FR_O_CIRCUMFLEX &uc UC_FR_I_CIRCUMFLEX &trans
+        //│  â Â     │  ë Ë     │  ï Ï     │  æ Æ     │  è È     │   │  ÿ Ÿ     │  û Û     │  ù Ù     │  ü Ü     │          │
+            &uc UC_FR_A_CIRCUMFLEX &uc UC_FR_E_DIAERESIS &uc UC_FR_I_DIAERESIS &uc UC_FR_AE          &uc UC_FR_E_GRAVE     &uc UC_FR_Y_DIAERESIS  &uc UC_FR_U_CIRCUMFLEX &uc UC_FR_U_GRAVE     &uc UC_FR_U_DIAERESIS &trans
         //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
-        //│  ç Ç     │          │          │          │          │   │          │          │          │          │          │
-            &uc UC_FR_C_CEDILLA   &trans               &trans               &trans               &trans               &trans               &trans               &trans               &trans               &trans
+        //│          │          │          │          │          │   │  î Î     │  à À     │  é É     │  ô Ô     │  ê Ê     │
+            &trans                &trans               &trans               &trans               &trans               &uc UC_FR_I_CIRCUMFLEX &uc UC_FR_A_GRAVE     &uc UC_FR_E_ACUTE     &uc UC_FR_O_CIRCUMFLEX &uc UC_FR_E_CIRCUMFLEX
         //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
-        //│          │          │          │          │          │   │          │          │          │          │          │
-            &trans                &trans               &trans               &trans               &trans               &trans               &trans               &trans               &trans               &trans
+        //│          │          │  ç Ç     │          │          │   │          │  œ Œ     │          │          │          │
+            &trans                &trans               &uc UC_FR_C_CEDILLA    &trans               &trans               &trans               &uc UC_FR_OE          &trans               &trans               &trans
         //╰──────────┴──────────┴──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┴──────────┴──────────╯
                                              &trans     &trans         &trans     &trans
         //                                 ╰──────────┴──────────╯   ╰──────────┴──────────╯
