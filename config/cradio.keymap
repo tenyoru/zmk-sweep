@@ -37,12 +37,15 @@
 // These indices must match the order of the nodes in the keymap below.
 #define DEF   0
 #define RU    1
-#define FR    2
-#define RIG   3
-#define LEF   4
-#define TRI   5
-#define GAME  6
-#define GAME2 7
+#define ACC   2
+#define GRV   3
+#define CIR   4
+#define TRM   5
+#define RIG   6
+#define LEF   7
+#define TRI   8
+#define GAME  9
+#define GAME2 10
 
 / {
     behaviors {
@@ -79,11 +82,11 @@
 
     combos {
         compatible = "zmk,combos";
-        combo_fr {
+        combo_acc {
             timeout-ms = <50>;
             require-prior-idle-ms = <100>;
-            key-positions = <24 25>;
-            bindings = <&sl FR>;
+            key-positions = <20 21>;
+            bindings = <&sl ACC>;
             layers = <DEF>;
         };
         combo_ru {
@@ -162,18 +165,71 @@
             >;
         };
 
-        // One-shot via J+K combo (sticky). Accents sit on their letter.
-        fr_layer {
+        // Diacritic picker, one-shot via the Z+X combo. Pick the mark, then the
+        // letter on its own base position. Glyphs with only one possible mark
+        // (é, ç, æ, œ) skip the second step and sit here directly.
+        acc_layer {
             bindings = <
         //╭──────────┬──────────┬──────────┬──────────┬──────────╮   ╭──────────┬──────────┬──────────┬──────────┬──────────╮
-        //│  â Â     │  ë Ë     │  ï Ï     │  æ Æ     │  è È     │   │  ÿ Ÿ     │  û Û     │  ù Ù     │  ü Ü     │          │
-            &uc UC_FR_A_CIRCUMFLEX &uc UC_FR_E_DIAERESIS &uc UC_FR_I_DIAERESIS &uc UC_FR_AE          &uc UC_FR_E_GRAVE     &uc UC_FR_Y_DIAERESIS  &uc UC_FR_U_CIRCUMFLEX &uc UC_FR_U_GRAVE     &uc UC_FR_U_DIAERESIS &trans
+        //│          │          │          │          │          │   │          │          │          │          │          │
+            &trans     &trans     &trans     &trans     &trans         &trans     &trans     &trans     &trans     &trans
         //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
-        //│          │          │          │          │          │   │  î Î     │  à À     │  é É     │  ô Ô     │  ê Ê     │
-            &trans                &trans               &trans               &trans               &trans               &uc UC_FR_I_CIRCUMFLEX &uc UC_FR_A_GRAVE     &uc UC_FR_E_ACUTE     &uc UC_FR_O_CIRCUMFLEX &uc UC_FR_E_CIRCUMFLEX
+        //│          │  ¨ dead  │  ^ dead  │  ` dead  │          │   │          │  æ Æ     │  é É     │  œ Œ     │          │
+            &trans     &sl TRM    &sl CIR    &sl GRV    &trans         &trans     &uc UC_FR_AE &uc UC_FR_E_ACUTE &uc UC_FR_OE &trans
         //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
-        //│          │          │  ç Ç     │          │          │   │          │  œ Œ     │          │          │          │
-            &trans                &trans               &uc UC_FR_C_CEDILLA    &trans               &trans               &trans               &uc UC_FR_OE          &trans               &trans               &trans
+        //│          │          │  ç Ç     │          │          │   │          │          │          │          │          │
+            &trans     &trans     &uc UC_FR_C_CEDILLA   &trans     &trans         &trans     &trans     &trans     &trans     &trans
+        //╰──────────┴──────────┴──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┴──────────┴──────────╯
+                                             &trans     &trans         &trans     &trans
+        //                                 ╰──────────┴──────────╯   ╰──────────┴──────────╯
+            >;
+        };
+
+        grv_layer {
+            bindings = <
+        //╭──────────┬──────────┬──────────┬──────────┬──────────╮   ╭──────────┬──────────┬──────────┬──────────┬──────────╮
+        //│          │          │          │          │          │   │          │          │  ù Ù     │          │          │
+            &trans     &trans     &trans     &trans     &trans         &trans     &trans     &uc UC_FR_U_GRAVE &trans &trans
+        //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
+        //│          │          │          │          │          │   │          │  à À     │  è È     │          │          │
+            &trans     &trans     &trans     &trans     &trans         &trans     &uc UC_FR_A_GRAVE &uc UC_FR_E_GRAVE &trans &trans
+        //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
+        //│          │          │          │          │          │   │          │          │          │          │          │
+            &trans     &trans     &trans     &trans     &trans         &trans     &trans     &trans     &trans     &trans
+        //╰──────────┴──────────┴──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┴──────────┴──────────╯
+                                             &trans     &trans         &trans     &trans
+        //                                 ╰──────────┴──────────╯   ╰──────────┴──────────╯
+            >;
+        };
+
+        cir_layer {
+            bindings = <
+        //╭──────────┬──────────┬──────────┬──────────┬──────────╮   ╭──────────┬──────────┬──────────┬──────────┬──────────╮
+        //│          │          │          │          │          │   │          │          │  û Û     │          │          │
+            &trans     &trans     &trans     &trans     &trans         &trans     &trans     &uc UC_FR_U_CIRCUMFLEX &trans &trans
+        //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
+        //│          │          │          │          │          │   │  î Î     │  â Â     │  ê Ê     │  ô Ô     │          │
+            &trans     &trans     &trans     &trans     &trans         &uc UC_FR_I_CIRCUMFLEX &uc UC_FR_A_CIRCUMFLEX &uc UC_FR_E_CIRCUMFLEX &uc UC_FR_O_CIRCUMFLEX &trans
+        //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
+        //│          │          │          │          │          │   │          │          │          │          │          │
+            &trans     &trans     &trans     &trans     &trans         &trans     &trans     &trans     &trans     &trans
+        //╰──────────┴──────────┴──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┴──────────┴──────────╯
+                                             &trans     &trans         &trans     &trans
+        //                                 ╰──────────┴──────────╯   ╰──────────┴──────────╯
+            >;
+        };
+
+        trm_layer {
+            bindings = <
+        //╭──────────┬──────────┬──────────┬──────────┬──────────╮   ╭──────────┬──────────┬──────────┬──────────┬──────────╮
+        //│          │          │          │          │          │   │  ÿ Ÿ     │          │  ü Ü     │          │          │
+            &trans     &trans     &trans     &trans     &trans         &uc UC_FR_Y_DIAERESIS &trans &uc UC_FR_U_DIAERESIS &trans &trans
+        //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
+        //│          │          │          │          │          │   │  ï Ï     │          │  ë Ë     │          │          │
+            &trans     &trans     &trans     &trans     &trans         &uc UC_FR_I_DIAERESIS &trans &uc UC_FR_E_DIAERESIS &trans &trans
+        //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
+        //│          │          │          │          │          │   │          │          │          │          │          │
+            &trans     &trans     &trans     &trans     &trans         &trans     &trans     &trans     &trans     &trans
         //╰──────────┴──────────┴──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┴──────────┴──────────╯
                                              &trans     &trans         &trans     &trans
         //                                 ╰──────────┴──────────╯   ╰──────────┴──────────╯
