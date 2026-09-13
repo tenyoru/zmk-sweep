@@ -174,8 +174,8 @@
         //│          │          │          │          │          │   │          │          │          │          │          │
             &trans     &trans     &trans     &trans     &trans         &trans     &trans     &trans     &trans     &trans
         //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
-        //│          │  ¨ dead  │  ^ dead  │  ` dead  │          │   │          │  æ Æ     │  é É     │  œ Œ     │          │
-            &trans     &sl TRM    &sl CIR    &sl GRV    &trans         &trans     &uc UC_FR_AE &uc UC_FR_E_ACUTE &uc UC_FR_OE &trans
+        //│          │          │  ^ dead  │  ` dead  │  ¨ dead  │   │          │  æ Æ     │  é É     │  œ Œ     │          │
+            &trans     &trans     &sl CIR    &sl GRV    &sl TRM        &trans     &uc UC_FR_AE &uc UC_FR_E_ACUTE &uc UC_FR_OE &trans
         //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
         //│          │          │  ç Ç     │          │          │   │          │          │          │          │          │
             &trans     &trans     &uc UC_FR_C_CEDILLA   &trans     &trans         &trans     &trans     &trans     &trans     &trans
